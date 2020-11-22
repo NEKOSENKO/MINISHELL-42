@@ -17,7 +17,16 @@ void minishell_loop()
 	char	*line;
 	char	**args;
 	int status;
-	ft_putstr("Senko~> ");
+
+	status = 1;
+	while (status)
+	{
+		ft_putstr("Senko~> ");
+		//read
+		//split
+		//exec
+		//free
+	}
 }
 
 int main (int argc, char **argv)

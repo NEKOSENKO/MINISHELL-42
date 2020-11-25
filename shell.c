@@ -32,7 +32,9 @@ char *read_line()
 
 	while (1)
 	{
-		c = getchar(); //this must be edited for later, function not allowed
+		//c = getchar();this must be edited for later, function not allowed
+
+		c = read(0, buffer, 1024);
 		if (c == -1 || c == '\n')
 		{
 			buffer[pos] = '\0';

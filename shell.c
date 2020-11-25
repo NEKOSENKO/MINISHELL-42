@@ -11,6 +11,12 @@
 /* ************************************************************************** */
 
 # include "s_header.h"
+void free_buf(char *buffer)
+{
+	ft_putstr("Allocation Error");
+	free(buffer);
+	exit(1);
+}
 
 char *read_line()
 {
@@ -24,12 +30,8 @@ char *read_line()
 	*buffer		= malloc(sizeof(char) * buff_size);
 
 	if (!buffer)
-	{
-		ft_putstr("Allocation Error");
-		free(buffer);
-		exit(1);
-	}
-
+		free_buf(buffer);
+		
 	while (1)
 	{
 		//c = getchar();this must be edited for later, function not allowed
@@ -49,11 +51,7 @@ char *read_line()
 			buff_size += 1024;
 			*buffer	= malloc(sizeof(char) * buff_size);
 			if (!buffer)
-			{
-				ft_putstr("Allocation Error");
-				free(buffer);
-				exit(1);
-			}
+				free_buf(buffer);
 		}
 	}
 

@@ -18,5 +18,6 @@
 # include <sys/types.h>
 # include <errno.h>
 
+# define SH_TOK_DELIM "\t \r \n \a"
 
 #endif

@@ -16,13 +16,10 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
+# include <stdio.h>
 # include "../s_header.h"
 
-typedef struct		s_list
-{
-	void			*content;
-	struct s_list	*next;
-}					t_list;
 
 size_t				ft_strlen(const char *str);
 
@@ -41,7 +38,7 @@ char				*ft_strtrim(char const *s1, char const	*set);
 
 char				*ft_strjoin(char const *s1, char const *s2);
 
-
+int					get_next_line(char **line);
 char				**ft_split(char const *s, char c);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 

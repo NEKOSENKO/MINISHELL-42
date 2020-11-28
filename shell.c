@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 # include "s_header.h"
+
+
 void free_buf(char *buffer)
 {
 	ft_putstr("Allocation Error");
@@ -27,7 +29,7 @@ char *read_line()
 
 	buff_size	= 1024;
 	pos			= 0;
-	*buffer		= malloc(sizeof(char) * buff_size);
+	buffer		= malloc(sizeof(char) * buff_size);
 
 	if (!buffer)
 		free_buf(buffer);
@@ -49,14 +51,14 @@ char *read_line()
 		if (pos >= buff_size)
 		{
 			buff_size += 1024;
-			*buffer	= malloc(sizeof(char) * buff_size);
+			buffer	= malloc(sizeof(char) * buff_size);
 			if (!buffer)
 				free_buf(buffer);
 		}
 	}
 
 }
-
+/*
 char	**spilt_line(char *line)
 {
 	int		buffsize;
@@ -66,7 +68,7 @@ char	**spilt_line(char *line)
 
 	buffsize = 1024;
 	pos = 0;
-	**tokens = malloc(sizeof(char *) * buffsize);
+	*tokens = malloc(sizeof(char *) * buffsize);
 
 	if (!tokens)
 	{
@@ -75,13 +77,14 @@ char	**spilt_line(char *line)
 		exit(1);
 	}
 	//to do :
-	/*
-		tokenise to token ! use split ?
-		loop if token, and fill them to **tokens 
+	
+		tokenise to token[] ! use split ?
+		loop if token, and fill -> **tokens 
 		....
-	*/
+	
 
-}
+} 
+*/
 
 void minishell_loop()
 {
@@ -94,7 +97,7 @@ void minishell_loop()
 	{
 		ft_putstr("Senko~> ");
 		line = read_line(); //read
-		args = spilt_line(line); //split
+		//args = spilt_line(line); //split
 		//exec
 		//free
 	}

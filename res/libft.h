@@ -18,7 +18,6 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
-# include "../s_header.h"
 
 
 size_t				ft_strlen(const char *str);

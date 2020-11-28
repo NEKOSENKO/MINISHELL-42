@@ -1,0 +1,11 @@
+putstr
+strncmp
+strchr
+strlen
+strdup
+strjoin
+free_split
+strncmp
+args_len ..
+strrenew
+commands_handling !

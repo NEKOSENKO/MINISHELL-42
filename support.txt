@@ -1,11 +1,14 @@
-putstr
-strncmp
-strchr
-strlen
-strdup
-strjoin
+putstr /
+strncmp /
+strchr /
+strlen /
+strdup /
+....
+
+
+strjoin/
 free_split
 strncmp
 args_len ..
-strrenew
+str renew .. figure this out 
 commands_handling !

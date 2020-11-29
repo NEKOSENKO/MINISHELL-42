@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_functions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbrija <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/13 17:41:45 by mbrija            #+#    #+#             */
-/*   Updated: 2019/10/13 17:41:47 by mbrija           ###   ########.fr       */
+/*   Created: 2020/11/29 11:20:27 by mbrija            #+#    #+#             */
+/*   Updated: 2020/11/29 11:20:31 by mbrija           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "s_header.h"
 
-void	ft_putnbr(int n)
+static char *ft_strjoin(char *s1, char *s2)
 {
-	unsigned int	nbr;
+	int i;
+	int j;
+	int len1;
+	int len2;
 
-	if (n < 0)
+	i = 0;
+	j = 0;
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	char *p = malloc (len1 + len2 + 1);
+	while (i < len1 + len2)
 	{
-		nbr = n * -1;
-		ft_putchar('-');
+		if (i < len1)
+			p[i] = s1[i];
+		else
+			p[i] = s2[j++];
+		i++;
 	}
-	else
-		nbr = n;
-	if (n / 10)
-		ft_putnbr(nbr / 10);
-	ft_putchar((nbr % 10) + 48);
+	p[i] = 0;
+	return (p);
 }

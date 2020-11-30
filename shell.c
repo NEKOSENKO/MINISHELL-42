@@ -20,6 +20,17 @@ void free_buf(char *buffer)
 	exit(1);
 }
 
+int 	senko_getchar()
+{
+	char buf[1];
+    int n = read(0, buf, 1);
+
+    if(n < 1)
+        return -1;
+
+    return buf[0];
+}
+
 char *read_line()
 {
 	int		buff_size;
@@ -36,16 +47,17 @@ char *read_line()
 		
 	while (1)
 	{
-		//c = getchar();this must be edited for later, function not allowed
+		c = senko_getchar();
+		//this must be edited for later, function not allowed
 
-		c = read(0, buffer, 1024);
-		if (c == -1 || c == '\n')
+		if (c == EOF || c == '\n')
 		{
 			buffer[pos] = '\0';
 			return buffer;
 		}
 		else 
 			buffer[pos] = c;
+			printf("%c", buffer[pos]);
 		pos++;
 
 		if (pos >= buff_size)
@@ -56,7 +68,7 @@ char *read_line()
 				free_buf(buffer);
 		}
 	}
-
+	return buffer;
 }
 /*
 char	**spilt_line(char *line)

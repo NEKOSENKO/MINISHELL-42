@@ -20,17 +20,6 @@ void free_buf(char *buffer)
 	exit(1);
 }
 
-int 	senko_getchar()
-{
-	char buf[1];
-    int n = read(0, buf, 1);
-
-    if(n < 1)
-        return -1;
-
-    return buf[0];
-}
-
 char *read_line()
 {
 	int		buff_size;
@@ -48,8 +37,6 @@ char *read_line()
 	while (1)
 	{
 		c = senko_getchar();
-		//this must be edited for later, function not allowed
-
 		if (c == EOF || c == '\n')
 		{
 			buffer[pos] = '\0';
@@ -57,7 +44,7 @@ char *read_line()
 		}
 		else 
 			buffer[pos] = c;
-			printf("%c", buffer[pos]);
+			//printf("%c", buffer[pos]);
 		pos++;
 
 		if (pos >= buff_size)
@@ -70,7 +57,7 @@ char *read_line()
 	}
 	return buffer;
 }
-/*
+
 char	**spilt_line(char *line)
 {
 	int		buffsize;
@@ -80,7 +67,7 @@ char	**spilt_line(char *line)
 
 	buffsize = 1024;
 	pos = 0;
-	*tokens = malloc(sizeof(char *) * buffsize);
+	tokens = malloc(sizeof(char *) * buffsize);
 
 	if (!tokens)
 	{
@@ -88,15 +75,34 @@ char	**spilt_line(char *line)
 		free(tokens);
 		exit(1);
 	}
-	//to do :
-	
-		tokenise to token[] ! use split ?
-		loop if token, and fill -> **tokens 
-		....
-	
+		/*to do :
+		
+			tokenise to token[] ! use split ?
+			loop if token, and fill -> **tokens 
+			....
+		*/
+	token = senko_tok(line, SH_TOK_DELIM); //ft_split doesn't work here, so i made a better one .
+	while (token != NULL)
+	{
+		tokens[pos] = token;
+		pos++;
+		if (pos >= buffsize)
+		{
+			buffsize += 1024;
+			tokens = malloc(sizeof(char *) * buffsize);
+			if (!tokens)
+			{
+				ft_putstr("Allocation Error");
+				free(tokens);
+				exit(1);
+			}
+		}
+		token = senko_tok(NULL, SH_TOK_DELIM); // .................... !	
+	}
+	tokens[pos] = NULL;
+	return tokens;
 
 } 
-*/
 
 void minishell_loop()
 {
@@ -109,7 +115,7 @@ void minishell_loop()
 	{
 		ft_putstr("Senko~> ");
 		line = read_line(); //read
-		//args = spilt_line(line); //split
+		args = spilt_line(line); //split
 		//exec
 		//free
 	}

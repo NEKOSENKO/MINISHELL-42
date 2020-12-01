@@ -26,6 +26,10 @@
 
 
 //prototypes 
+int 	senko_getchar();
+
+char* senko_tok(char* s, char* delm);
+
 void	ft_putstr(char const *s);
 
 int		ft_strlen(const char *s);

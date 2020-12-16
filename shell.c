@@ -104,6 +104,26 @@ char	**spilt_line(char *line)
 
 } 
 
+int	shell_exec(char **args)
+{
+	int i;
+
+	i = 0;
+	if (args[0] == NULL)
+		return 1;
+	while (i < num_builtin_coms())
+	{
+		if (ft_strcmp(args[0], builtin_str[i] == 0))
+			return (*builtin_func[i](args));
+	}
+	return (shell_launch(args));
+}
+
+int	shell_launch(char **args)
+{
+	
+}
+
 void minishell_loop()
 {
 	char	*line;
@@ -116,8 +136,10 @@ void minishell_loop()
 		ft_putstr("Senko~> ");
 		line = read_line(); //read
 		args = spilt_line(line); //split
-		//exec
-		//free
+		status = shell_exec(args); //execution
+
+		free(line);
+		free(args); //free
 	}
 }
 

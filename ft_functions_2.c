@@ -47,37 +47,6 @@ int 	senko_getchar()
     return buf[0];
 }
 
- /*
-   	OBJECT TO BE CHANGED ...
-
-char* senko_strtok(char* s, char* delm)
-{
-    static int currIndex = 0;
-
-    if(!s || !delm || s[currIndex] == '\0')
-    return NULL;
-    char *W = (char *)malloc(sizeof(char)*100);
-    int i = currIndex, k = 0, j = 0;
-
-    while (s[i] != '\0'){
-        j = 0;
-        while (delm[j] != '\0'){
-            if (s[i] != delm[j])
-                W[k] = s[i];
-            else goto It;
-            j++;
-        }
-
-        i++;
-        k++;
-    }
-It:
-    W[i] = 0;
-    currIndex = i+1;
-    //Iterator = ++ptr;
-    return W;
-}
-*/
 char	*senko_tok(char *s, char *delm)
 {
 	char	*w;
@@ -111,4 +80,21 @@ char	*senko_tok(char *s, char *delm)
 		
 	}
 	return w;
+}
+
+int num_builtin_coms()
+{
+	return sizeof(builtin_str) / sizeof(char *);
+}
+
+int ft_strcmp(const char *s1, const char *s2)
+{
+	int i;
+
+	i = -1;
+	while (++i < ft_strlen(s1))
+		if (((unsigned char)s1[i] - (unsigned char)s2[i]) != 0
+				|| s1[i] == 0 || s2[i] == 0)
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return (0);
 }

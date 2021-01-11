@@ -1,150 +1,168 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   shell.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mbrija <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/22 12:24:11 by mbrija            #+#    #+#             */
-/*   Updated: 2020/11/22 12:24:21 by mbrija           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "shell.h"
 
-# include "s_header.h"
-
-
-void free_buf(char *buffer)
+char* read_line()
 {
-	ft_putstr("Allocation Error");
-	free(buffer);
-	exit(1);
-}
+	int buff_size;
+	int pos;
+	int c;
+	char *buffer;
 
-char *read_line()
-{
-	int		buff_size;
-	int		pos;
-	char 	*buffer;
-	int		c;
+	buff_size = 1024;
+	pos = 0;
+	buffer = malloc(sizeof(char) * buff_size);
 
-	buff_size	= 1024;
-	pos			= 0;
-	buffer		= malloc(sizeof(char) * buff_size);
+	//protection 
 
-	if (!buffer)
-		free_buf(buffer);
-		
 	while (1)
 	{
 		c = senko_getchar();
 		if (c == EOF || c == '\n')
 		{
 			buffer[pos] = '\0';
-			return buffer;
+			return buffer;	
 		}
 		else 
 			buffer[pos] = c;
-			//printf("%c", buffer[pos]);
 		pos++;
-
 		if (pos >= buff_size)
 		{
 			buff_size += 1024;
-			buffer	= malloc(sizeof(char) * buff_size);
-			if (!buffer)
-				free_buf(buffer);
+			buffer = malloc(sizeof(char) * buff_size);
+			//protection
 		}
 	}
+
 	return buffer;
 }
 
-char	**spilt_line(char *line)
-{
-	int		buffsize;
-	int		pos;
-	char 	**tokens;
-	char	*token;
 
-	buffsize = 1024;
+t_command *parse_line(char *line)
+{
+	int pos = 0;
+	t_command *tok;
+	char *token;
+
+	token = senko_tok(line, DELIMS);
+	tok = ft_lstnew(token);
+	while(token != NULL)
+	{
+		ft_lstadd_back(tok, ft_lstnew(token[pos]));
+		pos++;
+	}
+	return tok;
+}
+
+int main(int argc, char **argv, char **env)
+{
+	int 		status;
+	t_command	*args;
+
+
+	status = 1;
+
+	g_line = NULL;
+	while(1)
+	{     
+		ft_putstr("\033[1;3;4;33;41m UNION_of_SENKO_SHELL_REPUBLICANS \033[0m$> ");
+			g_line = read_line(); //line collection ! abstract syntax trees ???
+			if (ft_strlen(g_line) == 0)
+			{
+				//Check_something if (zombie) 
+				continue;
+			}
+			// PARSE COMMAND HERE ..
+			args = parse_line(g_line);
+			// LAUNCH IT HERE ..
+			//printf("%s\n",g_line);
+
+		//free(g_line);
+		//free(args);
+	}
+	return 0;
+}
+
+
+/* ------------ DRAFTS -------------
+
+char **split_line(char *line)
+{
+	int buff_size;
+	int pos;
+	char **tokens;
+	char *token;
+
+	buff_size = 1024;
 	pos = 0;
-	tokens = malloc(sizeof(char *) * buffsize);
+	tokens = malloc(sizeof(char *) * buff_size);
+
 
 	if (!tokens)
 	{
-		ft_putstr("Allocation Error");
+		ft_putstr("ERROR");
 		free(tokens);
-		exit(1);
+		exit(1);	
 	}
-		/*to do :
-		
-			tokenise to token[] ! use split ?
-			loop if token, and fill -> **tokens 
-			....
-		*/
-	token = senko_tok(line, SH_TOK_DELIM); //ft_split doesn't work here, so i made a better one .
+
+	//protection
+	token = senko_tok(line, DELIMS);
 	while (token != NULL)
 	{
 		tokens[pos] = token;
 		pos++;
-		if (pos >= buffsize)
+		if (pos >= buff_size)
 		{
-			buffsize += 1024;
-			tokens = malloc(sizeof(char *) * buffsize);
-			if (!tokens)
-			{
-				ft_putstr("Allocation Error");
-				free(tokens);
-				exit(1);
-			}
+			buff_size += 1024;
+			tokens = malloc(sizeof(char *) * buff_size);
+				if (!tokens)
+				{
+					ft_putstr("ERROR");
+					free(tokens);
+					exit(1);	
+				}
 		}
-		token = senko_tok(NULL, SH_TOK_DELIM); // .................... !	
+		token = senko_tok(NULL, DELIMS);
 	}
+	
 	tokens[pos] = NULL;
 	return tokens;
-
-} 
-
-int	shell_exec(char **args)
-{
-	int i;
-
-	i = 0;
-	if (args[0] == NULL)
-		return 1;
-	while (i < num_builtin_coms())
-	{
-		if (ft_strcmp(args[0], builtin_str[i] == 0))
-			return (*builtin_func[i](args));
-	}
-	return (shell_launch(args));
 }
 
-int	shell_launch(char **args)
+t_job *parse_command(char *line)
 {
+	t_process *root_proc;
+	t_process *proc;		
+	char *command;
+	char *line_cursor;
+	char *c;
+	char *seg;
+	int seg_len;
+	int mode;
+ 
+	line = trim_line(line);
+	command = ft_strdup(line);
+	root_proc = NULL;
+	proc = NULL;
+	line_cursor = line;
+	c = line;
+	seg_len = 0;
+	mode = FOREGROUND_EXECUTION;
+
+	if (line[ft_strlen(line) - 1] == '&')
+	{
+		mode = BACKGROUND_EXECUTION;
+		line[ft_strlen(line) - 1] = '\0';
+	}
+	while (1)
+	{
+		if (*c == '\0' || *c == '|')
+			seg = (char *) malloc((seg_len + 1) * sizeof(char));
+			strncpy(seg, line_cursor, seg_len);
+
+			t_process *new_proc;
+	}
 	
+	
+
+	return 0;
 }
-
-void minishell_loop()
-{
-	char	*line;
-	char	**args;
-	int status;
-
-	status = 1;
-	while (status)
-	{
-		ft_putstr("Senko~> ");
-		line = read_line(); //read
-		args = spilt_line(line); //split
-		status = shell_exec(args); //execution
-
-		free(line);
-		free(args); //free
-	}
-}
-
-int main (int argc, char **argv)
-{
-	minishell_loop();
-	return (0);
-}
+*/

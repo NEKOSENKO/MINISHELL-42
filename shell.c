@@ -46,6 +46,7 @@ t_command *parse_line(char *line)
 	tok = ft_lstnew(token);
 	while(token != NULL)
 	{
+		//prototype .. don't compile
 		ft_lstadd_back(tok, ft_lstnew(token[pos]));
 		pos++;
 	}
@@ -63,7 +64,7 @@ int main(int argc, char **argv, char **env)
 	g_line = NULL;
 	while(1)
 	{     
-		ft_putstr("\033[1;3;4;33;41m UNION_of_SENKO_SHELL_REPUBLICANS \033[0m$> ");
+		ft_putstr("\033[1;3;4;33;41m Union_of_Senko_Shell_Republicans \033[0m$> ");
 			g_line = read_line(); //line collection ! abstract syntax trees ???
 			if (ft_strlen(g_line) == 0)
 			{

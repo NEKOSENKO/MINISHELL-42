@@ -54,24 +54,18 @@ t_command *parse_line(char *line)
 
 int main(int argc, char **argv, char **env)
 {
-	int 		status;
-	t_command	*args;
+	char 	*line;
+	char	**commands;
+	int 	ret;
 
+	initialise_envv(argc, argv, env);
 
-	status = 1;
-
-	g_line = NULL;
 	while(1)
 	{     
 		ft_putstr("\033[1;3;4;33;41m UNION_of_SENKO_SHELL_REPUBLICANS \033[0m$> ");
-			g_line = read_line(); //line collection ! abstract syntax trees ???
-			if (ft_strlen(g_line) == 0)
-			{
-				//Check_something if (zombie) 
-				continue;
-			}
+		
 			// PARSE COMMAND HERE ..
-			args = parse_line(g_line);
+
 			// LAUNCH IT HERE ..
 			//printf("%s\n",g_line);
 

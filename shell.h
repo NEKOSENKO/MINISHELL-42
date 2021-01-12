@@ -14,8 +14,6 @@
 
 #define DELIMS "\t \r \n \a | ;"
 
-char	*g_line;
-
 
 typedef struct			s_process 
 {
@@ -37,7 +35,7 @@ typedef struct 			s_command
     
 }               		t_command;
 
-
+char **g_env;
 
 static char *ft_strjoin(char *s1, char *s2);
 
@@ -60,5 +58,13 @@ void	ft_lstadd_back(t_command **alst, t_command *new);
 void	ft_lstclear(t_command **lst, void (*del)(void *));
 
 t_command	*ft_lstnew(void *content);
+
+void	initialise_envv(int ac, char **av, char **env);
+
+void *def_not_calloc(size_t size);
+
+void	ft_bzero(void *s, size_t n);
+
+void	ft_freestrarr(char **arr);
 
 #endif

@@ -15,10 +15,25 @@
 
 typedef struct 	source_s
 {   
-    char *buffer;       /* the input text */
-    long bufsize;       /* size of the input text */
-    long  curpos;       /* absolute char position in source */
+	char *buffer;       /* the input text */
+	long bufsize;       /* size of the input text */ 
+	long  curpos;       /* absolute char position in source */
 }				source_t;
+
+/* -- Scanner --*/
+typedef struct  token_s
+{
+	struct source_s *src;       /* source of input */
+	int    text_len;            /* length of token text */
+	char   *text;               /* token text */
+}               token_t;
+
+/* the special EOF token, which indicates the end of input */
+extern	token_t eof_token;
+token_t *tokenize(struct source_s *src);
+void	free_token(struct token_s *tok);
+/*----------------*/
+
 
 /* -- Parse Functs --*/
 char	next_char(source_t *src);
@@ -27,6 +42,7 @@ char	peek_char(source_t *src);
 void	skip_white_spaces(source_t *src);
 char	*read_line(void);
 /*-------------------*/
+
 
 
 /* uwu SENKO__FT_LIB uwu*/

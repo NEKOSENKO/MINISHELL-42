@@ -67,7 +67,7 @@ node_t	*parse_simple_command(token_t *tok)
 		return NULL;
 	}
 	src = tok->src;
-	while ((tok = tokenize(src) != &eof_token))
+	while ((tok = tokenize(src)) != &eof_token)
 	{
 		if(tok->text[0] == '\n')
 		{

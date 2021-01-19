@@ -57,15 +57,16 @@ union symval_u
     char               chr;
     char              *str;
 };
-typedef struct node_s
+typedef struct 			node_s
 {
-	enum node_type_e type;
-	enum val_type_e val_type;
-	union symval_u val;
-	int children;
-	struct node_s *fist_child;
-	struct node_s *next_sibling;
-}				node_t;
+	enum node_type_e	type;
+	enum val_type_e 	val_type;
+	union symval_u 		val;
+	int					children;
+	struct node_s 		*fist_child;
+	struct node_s 		*next_sibling;
+}						node_t;
+
 
 node_t	*parse_simple_command(token_t *tok);
 node_t	*new_node(enum node_type_e type);

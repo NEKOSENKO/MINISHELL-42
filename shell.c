@@ -52,10 +52,12 @@ int	parse_and_exec(source_t *src)
 	while (tok && tok != &eof_token)
 	{
 		com = parse_simple_command(tok);
+		printf("  ~ N children : [%d]\n",com->children);
+		printf("  ~ parsed : [%s]\n",com->fist_child->val.str);
 		if(!com)
 			break;
 		//exec
-		free_node_tree(com);
+		//free_node_tree(com);
 		tok = tokenize(src);
 	}
 	return 1;
@@ -63,13 +65,14 @@ int	parse_and_exec(source_t *src)
 
 int main(int ac, char **av, char **ev)
 {
-	char *line;
+//	char *line;
 	char *com;
-	int ret;
+//	int ret;
 	source_t src;
 
 	(void)ac;
 	(void)av;
+	(void)ev;
 
 	while (1) //Read-Eval-Print-L
 	{
@@ -78,6 +81,7 @@ int main(int ac, char **av, char **ev)
 		src.buffer = com;
 		src.bufsize = ft_strlen(com);
 		src.curpos = INIT_SRC_POS;
+		printf("  ~ initial buffer : > %s\n", src.buffer);
 		parse_and_exec(&src);
 	}
 	return (0);

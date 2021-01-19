@@ -18,7 +18,7 @@ void	free_node_tree(node_t *node)
 {
 	node_t *child;
 	node_t *next;
-	
+
 	if(!node)
 		return;
 	child = node->fist_child;
@@ -28,9 +28,11 @@ void	free_node_tree(node_t *node)
 		free_node_tree(child);
 		child = next;
 	}
+	printf("######\n");
 	if(node->val_type == VAL_STR)
 	{
-		if(node->val.str)
+		if(node->val.str == NULL)
+			printf("freed\n");
 			free(node->val.str);
 	}
 	free(node);

@@ -97,7 +97,7 @@ void	check_dilms(char nc, source_t *src)
 	endloop = 0;
 	while ((nc = next_char(src)) != EOF)
 	{
-		if(nc == '\t')
+		if(nc == '\t' || nc == ' ')
 		{
 			if(g_tok_bufindex > 0)
 				endloop = 1;
